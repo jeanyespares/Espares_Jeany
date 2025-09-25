@@ -2,6 +2,7 @@
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 class UsersController extends Controller {
+
     public function __construct()
     {
         parent::__construct();
@@ -9,25 +10,30 @@ class UsersController extends Controller {
         $this->call->library('pagination');
     }
 
+    // Display all users with pagination
     public function index($page = 1)
     {
-        $per_page = 5; // ✅ 5 records per page
+        $per_page = 5;
         $total = $this->UsersModel->count_all();
 
-        // Initialize pagination (LavaLust built-in)
+        // Use Tailwind pagination
+        $this->pagination->set_theme('tailwind');
+
+        // Initialize pagination
         $pager = $this->pagination->initialize($total, $per_page, $page, 'users/index');
         $data['links'] = $this->pagination->paginate();
 
-        // ✅ extract limit & offset
-        $limit = $per_page;
-        $offset = ($page - 1) * $per_page;
+        // Get LIMIT clause from pager
+        $limit_clause = $pager['limit'];
 
-        // Kunin records na may limit + offset
-        $data['users'] = $this->UsersModel->get_paginated($limit, $offset);
+        // Fetch paginated users
+        $data['users'] = $this->UsersModel->get_paginated($limit_clause);
 
+        // Load view
         $this->call->view('users/index', $data);
     }
 
+    // Create new user
     public function create()
     {
         if ($this->io->method() == 'post') {
@@ -38,7 +44,6 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->insert($data)) {
-                // ✅ balik lagi sa page 1
                 redirect(site_url('users/index/1'));
             } else {
                 echo "Error in creating user.";
@@ -48,6 +53,7 @@ class UsersController extends Controller {
         }
     }
 
+    // Update existing user
     public function update($id)
     {
         $user = $this->UsersModel->find($id);
@@ -74,6 +80,7 @@ class UsersController extends Controller {
         }
     }
 
+    // Delete user
     public function delete($id)
     {
         if ($this->UsersModel->delete($id)) {
