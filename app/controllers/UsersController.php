@@ -1,81 +1,91 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-/**
- * Controller: UsersController
- * 
- * Automatically generated via CLI.
- */
 class UsersController extends Controller {
+
     public function __construct()
     {
         parent::__construct();
+        $this->call->model('UsersModel');
+        $this->call->library('pagination');
     }
 
-    public function index()
+    // Display all users with pagination
+    public function index($page = 1)
     {
-        $this->call->model('UsersModel');
-        $data['users'] = $this->UsersModel-> All();
+        $per_page = 5;
+        $total = $this->UsersModel->count_all();
 
+        // Use Tailwind pagination
+        $this->pagination->set_theme('tailwind');
+
+        // Initialize pagination
+        $pager = $this->pagination->initialize($total, $per_page, $page, 'users/index');
+        $data['links'] = $this->pagination->paginate();
+
+        // Get LIMIT clause from pager
+        $limit_clause = $pager['limit'];
+
+        // Fetch paginated users
+        $data['users'] = $this->UsersModel->get_paginated($limit_clause);
+
+        // Load view
         $this->call->view('users/index', $data);
     }
 
-    function create(){
-        if($this->io->method() == 'post'){
-            $fname = $this->io->post('fname');
-            $lname = $this->io->post('lname');
-            $email = $this->io->post('email');
-
+    // Create new user
+    public function create()
+    {
+        if ($this->io->method() == 'post') {
             $data = [
-                'fname' => $fname,
-                'lname' => $lname,
-                'email' => $email
+                'fname' => $this->io->post('fname'),
+                'lname' => $this->io->post('lname'),
+                'email' => $this->io->post('email')
             ];
 
-            if($this->UsersModel->insert($data)){
-                redirect(site_url(''));
-            }else{
+            if ($this->UsersModel->insert($data)) {
+                redirect(site_url('users/index/1'));
+            } else {
                 echo "Error in creating user.";
             }
-
-        }else{
+        } else {
             $this->call->view('users/create');
         }
     }
 
-    function update($id){
+    // Update existing user
+    public function update($id)
+    {
         $user = $this->UsersModel->find($id);
-        if(!$user){
+        if (!$user) {
             echo "User not found.";
             return;
         }
 
-        if($this->io->method() == 'post'){
-            $fname = $this->io->post('fname');
-            $lname = $this->io->post('lname');
-            $email = $this->io->post('email');
-
+        if ($this->io->method() == 'post') {
             $data = [
-                'fname' => $fname,
-                'lname' => $lname,
-                'email' => $email
+                'fname' => $this->io->post('fname'),
+                'lname' => $this->io->post('lname'),
+                'email' => $this->io->post('email')
             ];
 
-            if($this->UsersModel->update($id, $data)){
-                redirect();
-            }else{
+            if ($this->UsersModel->update($id, $data)) {
+                redirect(site_url('users/index/1'));
+            } else {
                 echo "Error in updating user.";
             }
-        }else{
+        } else {
             $data['user'] = $user;
             $this->call->view('users/update', $data);
         }
     }
-    
-    function delete($id){
-        if($this->UsersModel->delete($id)){
-            redirect();
-        }else{
+
+    // Delete user
+    public function delete($id)
+    {
+        if ($this->UsersModel->delete($id)) {
+            redirect(site_url('users/index/1'));
+        } else {
             echo "Error in deleting user.";
         }
     }

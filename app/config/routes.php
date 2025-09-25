@@ -11,7 +11,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
+ * in the Software without without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
@@ -43,7 +43,15 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |
 */
 
+// Main route for the user directory. This handles the base URL like `localhost:3000`.
 $router->get('/', 'UsersController::index');
-$router->match('/users/create', 'UsersController::create', ['GET', 'POST']);
-$router->match('/users/update/{id}', 'UsersController::update', ['GET', 'POST']);
-$router->get('/users/delete/{id}', 'UsersController::delete');
+
+// Routes for the user pages
+$router->match('get|post', 'users/create', 'UsersController::create');
+$router->match('get|post', 'users/update/{id}', 'UsersController::update/$1');
+$router->get('users/delete/{id}', 'UsersController::delete/$1');
+
+// This is the correct pagination route
+// It handles the base user list page and any page number that follows.
+$router->get('users/index', 'UsersController::index');
+$router->get('users/index/(:num)', 'UsersController::index/$1');
