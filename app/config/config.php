@@ -79,7 +79,7 @@ $config['ENVIRONMENT']             = 'development';
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] 				= 'http://localhost/Espares_Jeany/';
+$config['base_url'] 				= 'https://espares-jeany.onrender.com';
 
 /*
 |--------------------------------------------------------------------------
