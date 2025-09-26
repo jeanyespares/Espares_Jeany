@@ -11,7 +11,7 @@ class UsersModel extends Model {
     }
 
     /**
-     * Bilangin lahat ng records sa table
+     * Count all records in the table
      * @return int
      */
     public function count_all()
@@ -20,8 +20,10 @@ class UsersModel extends Model {
     }
 
     /**
-     * Kunin lang ang data depende sa LIMIT/OFFSET galing pagination
-     * @param string $limit_clause - hal. "LIMIT 5 OFFSET 0"
+     * Fetch data with pagination (LIMIT clause)
+     * Supports both "LIMIT offset,rows" and "LIMIT rows OFFSET offset"
+     *
+     * @param string $limit_clause
      * @return array
      */
     public function get_paginated($limit_clause)
@@ -29,15 +31,52 @@ class UsersModel extends Model {
         $sql = "SELECT * FROM {$this->table} {$limit_clause}";
         return $this->db->raw($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
-     * Hanapin ang record gamit ang primary key
+     * Find a record by ID
      * @param int $id
      * @param bool $with_deleted
-     * @return object
+     * @return object|null
      */
     public function find($id, $with_deleted = false)
     {
-        return $this->db->table($this->table)->where($this->primary_key, $id)->get_row();
+        return $this->db->table($this->table)
+                        ->where($this->primary_key, $id)
+                        ->get_row();
+    }
+
+    /**
+     * Insert new record
+     * @param array $data
+     * @return bool|int Insert ID or false
+     */
+    public function insert($data)
+    {
+        return $this->db->table($this->table)->insert($data);
+    }
+
+    /**
+     * Update existing record
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function update($id, $data)
+    {
+        return $this->db->table($this->table)
+                        ->where($this->primary_key, $id)
+                        ->update($data);
+    }
+
+    /**
+     * Delete record by ID
+     * @param int $id
+     * @return bool
+     */
+    public function delete($id)
+    {
+        return $this->db->table($this->table)
+                        ->where($this->primary_key, $id)
+                        ->delete();
     }
 }

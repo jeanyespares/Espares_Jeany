@@ -13,21 +13,17 @@
       background: linear-gradient(to bottom right, #fbcfe8, #e0f2fe);
       background-attachment: fixed;
     }
-
     h2, label {
       font-family: 'Poppins', sans-serif;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes pulseIcon {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.2); }
     }
-
     .animate-fadeIn { animation: fadeIn 0.8s ease forwards; }
     .animate-delay-1 { animation-delay: 0.2s; }
     .animate-delay-2 { animation-delay: 0.4s; }
@@ -40,16 +36,16 @@
 
   <div class="bg-white/90 backdrop-blur-lg p-8 rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.1)] w-full max-w-md animate-fadeIn border border-sky-200">
 
-    <!-- BSIT-Themed Header -->
+    <!-- Header -->
     <div class="flex flex-col items-center mb-6 animate-fadeIn animate-delay-1">
       <div class="bg-gradient-to-br from-sky-400 to-pink-300 rounded-full p-3 shadow-md">
         <i class="fa-solid fa-laptop-code text-white text-3xl"></i>
       </div>
-      <h2 class="text-2xl font-bold text-slate-700 mt-3">Welcome BSIT Student</h2>
+      <h2 class="text-2xl font-bold text-slate-700 mt-3">BSIT Student Sign Up</h2>
     </div>
 
     <!-- Form -->
-    <form action="<?=site_url('users/create')?>" method="POST" class="space-y-5">
+    <form action="<?= site_url('users/create') ?>" method="POST" class="space-y-5">
 
       <!-- First Name -->
       <div class="relative animate-fadeIn animate-delay-2">
@@ -81,10 +77,10 @@
         </div>
       </div>
 
-      <!-- Sign Up Button -->
+      <!-- Submit Button -->
       <button type="submit"
               class="w-full bg-gradient-to-r from-sky-500 to-pink-400 hover:from-sky-600 hover:to-pink-500 text-white font-semibold py-3 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-sky-200 animate-fadeIn animate-delay-4 icon-pulse">
-        <i class=" "></i> Sign In
+        <i class="fa-solid fa-user-plus mr-2"></i> Sign Up
       </button>
 
     </form>
