@@ -10,29 +10,20 @@ class UsersController extends Controller {
         $this->call->library('pagination');
     }
 
-    // Display all users with pagination
+    // Display users with pagination
     public function index($page = 1)
     {
         $per_page = 5;
-        $page = max(1, (int)$page); // Ensure valid page number
+        $page = max(1, (int)$page);
 
         $total = $this->UsersModel->count_all();
-
-        // Use Tailwind pagination
         $this->pagination->set_theme('tailwind');
-
-        // Initialize pagination
         $pager = $this->pagination->initialize($total, $per_page, $page, 'users/index');
+
         $data['links'] = $this->pagination->paginate();
-
-        // Fetch paginated users using LIMIT clause
-        $limit_clause = $pager['limit'];
-        $data['users'] = $this->UsersModel->get_paginated($limit_clause);
-
-        // Pass pagination info too (optional, for debugging/info)
+        $data['users'] = $this->UsersModel->get_paginated($pager['limit']);
         $data['pager_info'] = $pager['info'];
 
-        // Load view
         $this->call->view('users/index', $data);
     }
 
@@ -49,14 +40,14 @@ class UsersController extends Controller {
             if ($this->UsersModel->insert($data)) {
                 redirect(site_url('users/index'));
             } else {
-                show_error("Error in creating user.");
+                show_error("Error creating user.");
             }
         } else {
             $this->call->view('users/create');
         }
     }
 
-    // Update existing user
+    // Update user
     public function update($id)
     {
         $user = $this->UsersModel->find($id);
@@ -75,7 +66,7 @@ class UsersController extends Controller {
             if ($this->UsersModel->update($id, $data)) {
                 redirect(site_url('users/index'));
             } else {
-                show_error("Error in updating user.");
+                show_error("Error updating user.");
             }
         } else {
             $data['user'] = $user;
@@ -89,7 +80,7 @@ class UsersController extends Controller {
         if ($this->UsersModel->delete($id)) {
             redirect(site_url('users/index'));
         } else {
-            show_error("Error in deleting user.");
+            show_error("Error deleting user.");
         }
     }
 }
