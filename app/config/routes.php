@@ -1,8 +1,10 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-// Default route → show all users
 $router->get('/', 'UsersController::index');
+
+// User list
+$router->get('users', 'UsersController::index');
 
 // CRUD routes
 $router->match('get|post', 'users/create', 'UsersController::create');

@@ -9,13 +9,14 @@ class UsersController extends Controller {
         $this->call->model('UsersModel');
     }
 
-    // Show all users without pagination
+    // Show all users
     public function index()
     {
-        $data['users'] = $this->UsersModel->all();
+        $data['users'] = $this->UsersModel->all();   // uses model::all($with_deleted = false)
         $this->call->view('users/index', $data);
     }
 
+    // Create new user
     public function create()
     {
         if ($this->io->method() === 'post') {
@@ -26,7 +27,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->insert($data)) {
-                redirect(site_url());
+                redirect(site_url('users'));
             } else {
                 show_error("Error creating user.");
             }
@@ -35,8 +36,11 @@ class UsersController extends Controller {
         }
     }
 
-    public function update($id)
+    // Update user
+    public function update($id = null)
     {
+        if ($id === null) show_404();
+
         $user = $this->UsersModel->find($id);
         if (!$user) {
             show_error("User not found.");
@@ -51,20 +55,22 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->update($id, $data)) {
-                redirect(site_url());
+                redirect(site_url('users'));
             } else {
                 show_error("Error updating user.");
             }
         } else {
-            $data['user'] = $user;
-            $this->call->view('users/update', $data);
+            $this->call->view('users/update', ['user' => $user]);
         }
     }
 
-    public function delete($id)
+    // Delete user
+    public function delete($id = null)
     {
+        if ($id === null) show_404();
+
         if ($this->UsersModel->delete($id)) {
-            redirect(site_url());
+            redirect(site_url('users'));
         } else {
             show_error("Error deleting user.");
         }
