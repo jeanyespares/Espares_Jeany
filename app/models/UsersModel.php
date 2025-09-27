@@ -4,51 +4,43 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 class UsersModel extends Model {
     protected $table = 'students';
     protected $primary_key = 'id';
+    protected $allowed_fields = ['fname', 'lname', 'email'];
+    protected $validation_rules = [
+        'fname' => 'required|min_length[2]|max_length[100]',
+        'lname' => 'required|min_length[2]|max_length[100]',
+        'email' => 'required|valid_email|max_length[150]'
+    ];
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Return all records (signature matches Model::all)
-     * @param bool $with_deleted
-     * @return array
-     */
-    public function all($with_deleted = false)
+    public function page($q = '', $records_per_page = null, $page = null)
     {
-        return $this->db->table($this->table)->get_all();
-    }
+        if (is_null($page)) {
+            // return all without pagination
+            return [
+                'total_rows' => $this->db->table($this->table)->count_all(),
+                'records'    => $this->db->table($this->table)->get_all()
+            ];
+        } else {
+            $query = $this->db->table($this->table);
 
-    // convenience alias if some code calls get_all()
-    public function get_all()
-    {
-        return $this->all();
-    }
+            if (!empty($q)) {
+                $query->like('fname', '%'.$q.'%')
+                     ->or_like('lname', '%'.$q.'%')
+                      ->or_like('email', '%'.$q.'%');
+            }
 
-    public function find($id, $with_deleted = false)
-    {
-        return $this->db->table($this->table)
-                        ->where($this->primary_key, $id)
-                        ->get_row();
-    }
+            // count total rows
+            $countQuery = clone $query;
+            $data['total_rows'] = $countQuery->select_count('*', 'count')->get()['count'];
 
-    public function insert($data)
-    {
-        return $this->db->table($this->table)->insert($data);
-    }
+            // fetch paginated records
+            $data['records'] = $query->pagination($records_per_page, $page)->get_all();
 
-    public function update($id, $data)
-    {
-        return $this->db->table($this->table)
-                        ->where($this->primary_key, $id)
-                        ->update($data);
-    }
-
-    public function delete($id)
-    {
-        return $this->db->table($this->table)
-                        ->where($this->primary_key, $id)
-                        ->delete();
+            return $data;
+        }
     }
 }
