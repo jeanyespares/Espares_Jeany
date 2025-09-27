@@ -170,7 +170,7 @@ $config['charset']					= 'UTF-8';
 | app/views/errors/ directory.  Use a full server path with trailing slash.
 |
 */
-$config['error_view_path']         	= '';
+$config['error_view_path']         	= 'https://espares-jeany.onrender.com/';
 
 /*
 |--------------------------------------------------------------------------
