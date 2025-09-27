@@ -3,86 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update User - Neon Matrix</title>
+  <title>Update User</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      background: radial-gradient(circle at top left, #0f0c29, #302b63, #24243e);
-      font-family: 'Poppins', sans-serif;
-    }
-    .glow-border {
-      border: 1px solid rgba(0, 255, 255, 0.35);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
-      backdrop-filter: blur(18px);
-    }
-    .glow-btn {
-      background: linear-gradient(to right, #06b6d4, #9333ea);
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-    .glow-btn:hover {
-      background: linear-gradient(to right, #9333ea, #ec4899);
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #06b6d4;
-    }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom right, #e0f2fe, #fbcfe8); background-attachment: fixed; }
+    h2, label { font-family: 'Poppins', sans-serif; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+    .animate-fadeIn { animation: fadeIn 0.8s ease; }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center text-gray-200 p-6">
+<body class="min-h-screen flex flex-col text-sm text-slate-700">
 
-  <div class="bg-white/10 glow-border p-8 rounded-3xl w-full max-w-md">
-    
-    <!-- Header -->
-    <div class="flex flex-col items-center mb-8">
-      <div class="bg-gradient-to-br from-cyan-500 to-purple-600 rounded-full p-5 shadow-lg animate-pulse">
-        <i class="fa-solid fa-user-gear text-white text-4xl"></i>
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-sky-400 to-pink-300 shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-white font-semibold text-lg tracking-wide">
+        <i class="fa-solid fa-laptop-code mr-2"></i> BSIT Member Update
       </div>
-      <h2 class="text-2xl font-bold text-cyan-400 mt-4 tracking-wide">
-        Update User Information
-      </h2>
-      <p class="text-gray-400 text-sm">Keep your profile futuristic ✨</p>
     </div>
+  </nav>
 
-    <!-- Update Form -->
-    <form action="<?= site_url('users/update/'.$user['id']) ?>" method="POST" class="space-y-6">
-      
-      <!-- First Name -->
-      <div>
-        <label class="block text-cyan-300 mb-1 font-medium">First Name</label>
-        <input type="text" name="first_name" value="<?= html_escape($user['first_name']) ?>" required
-          class="w-full px-4 py-3 bg-black/40 text-gray-200 border border-cyan-600 rounded-xl
-                 focus:ring-2 focus:ring-cyan-400 focus:outline-none shadow-sm transition duration-200">
-      </div>
+  <!-- Update Form -->
+  <div class="flex-grow flex items-center justify-center px-4">
+    <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-lg border border-sky-200 animate-fadeIn">
 
-      <!-- Last Name -->
-      <div>
-        <label class="block text-cyan-300 mb-1 font-medium">Last Name</label>
-        <input type="text" name="last_name" value="<?= html_escape($user['last_name']) ?>" required
-          class="w-full px-4 py-3 bg-black/40 text-gray-200 border border-cyan-600 rounded-xl
-                 focus:ring-2 focus:ring-cyan-400 focus:outline-none shadow-sm transition duration-200">
-      </div>
+      <h2 class="text-2xl font-semibold text-center text-sky-600 mb-6">Update Profile</h2>
 
-      <!-- Email -->
-      <div>
-        <label class="block text-cyan-300 mb-1 font-medium">Email Address</label>
-        <input type="email" name="email" value="<?= html_escape($user['email']) ?>" required
-          class="w-full px-4 py-3 bg-black/40 text-gray-200 border border-cyan-600 rounded-xl
-                 focus:ring-2 focus:ring-cyan-400 focus:outline-none shadow-sm transition duration-200">
-      </div>
+      <form action="<?= site_url('users/update/'.$user['id']) ?>" method="POST" class="space-y-5">
+        <?= csrf_field() ?>
 
-      <!-- Save Button -->
-      <button type="submit"
-        class="w-full glow-btn font-semibold py-3 rounded-xl shadow-lg flex items-center justify-center gap-2">
-        <i class="fa-solid fa-save"></i> Save Changes
-      </button>
+        <!-- First Name -->
+        <div>
+          <label class="block text-slate-700 mb-1 font-medium">First Name</label>
+          <div class="relative">
+            <i class="fa-solid fa-user text-sky-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" name="fname" value="<?= html_escape($user['fname']) ?>" required
+                   class="w-full pl-10 pr-4 py-3 border border-sky-300 rounded-xl bg-white focus:ring-2 focus:ring-sky-400 focus:outline-none shadow-sm transition">
+          </div>
+        </div>
 
-      <!-- Back to Directory -->
-      <a href="<?= site_url() ?>"
-        class="block text-center mt-4 text-cyan-300 hover:text-cyan-400 transition">
-        ← Back to User Directory
-      </a>
-    </form>
+        <!-- Last Name -->
+        <div>
+          <label class="block text-slate-700 mb-1 font-medium">Last Name</label>
+          <div class="relative">
+            <i class="fa-solid fa-user-tag text-sky-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" name="lname" value="<?= html_escape($user['lname']) ?>" required
+                   class="w-full pl-10 pr-4 py-3 border border-sky-300 rounded-xl bg-white focus:ring-2 focus:ring-sky-400 focus:outline-none shadow-sm transition">
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-slate-700 mb-1 font-medium">Email Address</label>
+          <div class="relative">
+            <i class="fa-solid fa-envelope text-sky-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="email" name="email" value="<?= html_escape($user['email']) ?>" required
+                   class="w-full pl-10 pr-4 py-3 border border-sky-300 rounded-xl bg-white focus:ring-2 focus:ring-sky-400 focus:outline-none shadow-sm transition">
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between gap-3">
+          <a href="<?= site_url('users') ?>"
+             class="w-1/2 text-center bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-3 rounded-xl shadow transition">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Back
+          </a>
+          <button type="submit"
+                  class="w-1/2 bg-gradient-to-r from-sky-500 to-pink-400 hover:from-sky-600 hover:to-pink-500 text-white font-medium py-3 rounded-xl shadow-md transition transform hover:scale-105">
+            <i class="fa-solid fa-pen-to-square mr-2"></i> Update
+          </button>
+        </div>
+      </form>
+
+    </div>
   </div>
-
 </body>
 </html>
