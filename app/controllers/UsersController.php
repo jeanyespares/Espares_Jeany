@@ -88,7 +88,7 @@ class UsersController extends Controller {
             $data = array(
                 
                 'fname'=> $fname,
-                'lname'=> $fname,
+                'lname'=> $lname,
                 'email'=> $email
             );
             if($this->UsersModel->update($id,$data))
