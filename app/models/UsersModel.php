@@ -20,8 +20,8 @@ class UsersModel extends Model {
     }
 
     /**
-     * Fetch data with pagination (LIMIT clause)
-     * Supports both "LIMIT offset,rows" and "LIMIT rows OFFSET offset"
+     * Fetch data with pagination
+     * Expects $limit_clause from pagination library
      *
      * @param string $limit_clause
      * @return array
@@ -34,6 +34,7 @@ class UsersModel extends Model {
 
     /**
      * Find a record by ID
+     *
      * @param int $id
      * @param bool $with_deleted
      * @return object|null
@@ -46,7 +47,8 @@ class UsersModel extends Model {
     }
 
     /**
-     * Insert new record
+     * Insert a new record
+     *
      * @param array $data
      * @return bool|int Insert ID or false
      */
@@ -57,6 +59,7 @@ class UsersModel extends Model {
 
     /**
      * Update existing record
+     *
      * @param int $id
      * @param array $data
      * @return bool
@@ -69,7 +72,8 @@ class UsersModel extends Model {
     }
 
     /**
-     * Delete record by ID
+     * Delete a record by ID
+     *
      * @param int $id
      * @return bool
      */

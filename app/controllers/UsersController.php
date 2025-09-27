@@ -14,16 +14,28 @@ class UsersController extends Controller {
     public function index($page = 1)
     {
         $per_page = 5;
+
+        // ✅ Detect page number (segment OR query string)
+        $get_page = (int) $this->io->get('page');   // for query string e.g. ?page=2
+        if ($get_page > 0) {
+            $page = $get_page;
+        }
+
         $page = max(1, (int)$page);
 
+        // Total records
         $total = $this->UsersModel->count_all();
+
+        // Setup pagination
         $this->pagination->set_theme('tailwind');
         $pager = $this->pagination->initialize($total, $per_page, $page, 'users/index');
 
-        $data['links'] = $this->pagination->paginate();
+        // Fetch data
         $data['users'] = $this->UsersModel->get_paginated($pager['limit']);
+        $data['links'] = $this->pagination->paginate();
         $data['pager_info'] = $pager['info'];
 
+        // Load view
         $this->call->view('users/index', $data);
     }
 
@@ -38,7 +50,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->insert($data)) {
-                redirect(site_url());
+                redirect(site_url('users/index'));
             } else {
                 show_error("Error creating user.");
             }
@@ -64,7 +76,7 @@ class UsersController extends Controller {
             ];
 
             if ($this->UsersModel->update($id, $data)) {
-                redirect(site_url());
+                redirect(site_url('users/index'));
             } else {
                 show_error("Error updating user.");
             }
@@ -78,7 +90,7 @@ class UsersController extends Controller {
     public function delete($id)
     {
         if ($this->UsersModel->delete($id)) {
-            redirect(site_url());
+            redirect(site_url('users/index'));
         } else {
             show_error("Error deleting user.");
         }
