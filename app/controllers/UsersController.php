@@ -60,12 +60,12 @@ class UsersController extends Controller {
     function create()
     {
         if($this->io->method() == 'post'){
-            $fname = $this->io->post('first_name');
-            $lname = $this->io->post('last_name');
+            $fname = $this->io->post('fname');
+            $lname = $this->io->post('lname');
             $email = $this->io->post('email');
             $data = array(
-                'last_name'=> $fname,
-                'first_name'=> $lname,
+                'fname'=> $fname,
+                'lname'=> $lname,
                 'email'=> $email
             );
             if($this->UsersModel->insert($data))
