@@ -67,8 +67,8 @@
               <?php foreach ($users as $user): ?>
                 <tr class="even:bg-white odd:bg-sky-50 hover:bg-sky-100 transition-all duration-200 ease-in-out">
                   <td class="py-3 px-4 font-medium text-slate-600"><?= html_escape($user['id']); ?></td>
-                  <td class="py-3 px-4"><?= html_escape($user['lname']); ?></td>
                   <td class="py-3 px-4"><?= html_escape($user['fname']); ?></td>
+                  <td class="py-3 px-4"><?= html_escape($user['lname']); ?></td>
                   <td class="py-3 px-4">
                     <span class="bg-sky-100 text-sky-700 text-sm font-semibold px-3 py-1 rounded-full">
                       <?= html_escape($user['email']); ?>
