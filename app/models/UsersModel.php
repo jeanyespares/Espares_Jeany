@@ -11,25 +11,12 @@ class UsersModel extends Model {
     }
 
     /**
-     * Count all records in the table
-     * @return int
-     */
-    public function count_all()
-    {
-        return $this->db->table($this->table)->count();
-    }
-
-    /**
-     * Fetch data with pagination
-     * Expects $limit_clause from pagination library
-     *
-     * @param string $limit_clause
+     * Get all records (no pagination)
      * @return array
      */
-    public function get_paginated($limit_clause)
+    public function all()
     {
-        $sql = "SELECT * FROM {$this->table} {$limit_clause}";
-        return $this->db->raw($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->table($this->table)->get_all();
     }
 
     /**

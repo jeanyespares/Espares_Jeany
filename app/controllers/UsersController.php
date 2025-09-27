@@ -7,27 +7,66 @@ class UsersController extends Controller {
     {
         parent::__construct();
         $this->call->model('UsersModel');
-        $this->call->library('pagination');
     }
 
-    public function index($page = 1)
+    // Show all users without pagination
+    public function index()
     {
-        $per_page = 5;
-        $page = max(1, (int)$page); // page mula sa URI segment
-
-        $total = $this->UsersModel->count_all();
-
-        $this->pagination->set_theme('tailwind');
-        $pager = $this->pagination->initialize($total, $per_page, $page, 'users/index');
-
-        $data['links'] = $this->pagination->paginate();
-        $data['users'] = $this->UsersModel->get_paginated($pager['limit']);
-        $data['pager_info'] = $pager['info'];
-
+        $data['users'] = $this->UsersModel->all();
         $this->call->view('users/index', $data);
     }
 
-    public function create() { /* same code as before */ }
-    public function update($id) { /* same code as before */ }
-    public function delete($id) { /* same code as before */ }
+    public function create()
+    {
+        if ($this->io->method() === 'post') {
+            $data = [
+                'fname' => $this->io->post('fname'),
+                'lname' => $this->io->post('lname'),
+                'email' => $this->io->post('email')
+            ];
+
+            if ($this->UsersModel->insert($data)) {
+                redirect(site_url());
+            } else {
+                show_error("Error creating user.");
+            }
+        } else {
+            $this->call->view('users/create');
+        }
+    }
+
+    public function update($id)
+    {
+        $user = $this->UsersModel->find($id);
+        if (!$user) {
+            show_error("User not found.");
+            return;
+        }
+
+        if ($this->io->method() === 'post') {
+            $data = [
+                'fname' => $this->io->post('fname'),
+                'lname' => $this->io->post('lname'),
+                'email' => $this->io->post('email')
+            ];
+
+            if ($this->UsersModel->update($id, $data)) {
+                redirect(site_url());
+            } else {
+                show_error("Error updating user.");
+            }
+        } else {
+            $data['user'] = $user;
+            $this->call->view('users/update', $data);
+        }
+    }
+
+    public function delete($id)
+    {
+        if ($this->UsersModel->delete($id)) {
+            redirect(site_url());
+        } else {
+            show_error("Error deleting user.");
+        }
+    }
 }

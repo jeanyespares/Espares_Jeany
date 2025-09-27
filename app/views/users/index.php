@@ -12,17 +12,6 @@
     body { font-family: 'Inter', sans-serif; }
     h2, th { font-family: 'Poppins', sans-serif; }
     th, td { border: 1px solid #bae6fd; }
-    .pagination ul { display: flex; gap: 6px; justify-content: center; margin-top: 20px; list-style: none; padding: 0; }
-    .pagination li a {
-      display: inline-block; padding: 6px 12px; border: 1px solid #ddd;
-      border-radius: 9999px; background: white; color: #0369a1; font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    .pagination li a:hover { background: #f0f9ff; color: #0ea5e9; }
-    .pagination .active a {
-      background: linear-gradient(to right, #38bdf8, #ec4899);
-      color: white; border: none; font-weight: 600;
-    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-sky-100 to-pink-100 font-sans text-sm">
@@ -98,13 +87,6 @@
             <?php endif; ?>
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination mt-6">
-        <?php if (isset($links) && !empty($links)): ?>
-          <?= $links; ?>
-        <?php endif; ?>
       </div>
 
     </div>

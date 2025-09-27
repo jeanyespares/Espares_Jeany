@@ -32,8 +32,7 @@
       <h2 class="text-2xl font-semibold text-center text-sky-600 mb-6">Update Profile</h2>
 
       <form action="<?= site_url('users/update/'.$user['id']) ?>" method="POST" class="space-y-5">
-        <?= csrf_field() ?>
-
+        
         <!-- First Name -->
         <div>
           <label class="block text-slate-700 mb-1 font-medium">First Name</label>
