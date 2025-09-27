@@ -23,8 +23,8 @@
             <table class="w-full border border-gray-200 rounded-lg overflow-hidden">
                 <thead>
                     <tr class="bg-green-600 text-white">
-                        <th class="px-4 py-3 text-left">ID</th>
-                        <th class="px-4 py-3 text-left">Username</th>
+                        <th class="px-4 py-3 text-left">Id</th>
+                        <th class="px-4 py-3 text-left">Name</th>
                         <th class="px-4 py-3 text-left">Email</th>
                         <th class="px-4 py-3 text-left">Action</th>
                     </tr>
@@ -33,7 +33,7 @@
                     <?php foreach(html_escape($users) as $user): ?>
                     <tr class="hover:bg-blue-50 transition">
                         <td class="px-4 py-3"><?= $user['id']; ?></td>
-                        <td class="px-4 py-3 font-medium text-gray-700"><?= $user['username']; ?></td>
+                        <td class="px-4 py-3 font-medium text-gray-700"><?= $user['Name']; ?></td>
                         <td class="px-4 py-3 text-gray-600"><?= $user['email']; ?></td>
                         <td class="px-4 py-3 text-gray-600 space-x-2">
                             <a href="<?= site_url('users/update/'.$user['id']);?>" 
