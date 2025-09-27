@@ -123,7 +123,7 @@ $config['charset']                 = 'UTF-8';
 | Error Views Directory Path
 |--------------------------------------------------------------------------
 */
-$config['error_view_path']         = APPPATH . 'views/errors/';
+$config['error_view_path']         = 'views/errors/';
 
 /*
 |--------------------------------------------------------------------------
