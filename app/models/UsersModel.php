@@ -12,11 +12,34 @@ class UsersModel extends Model {
 
     /**
      * Get all records (no pagination)
+     * @param bool $with_deleted
      * @return array
      */
-    public function all()
+    public function all($with_deleted = false)
     {
         return $this->db->table($this->table)->get_all();
+    }
+
+    /**
+     * Count all records in the table
+     * @return int
+     */
+    public function count_all()
+    {
+        return $this->db->table($this->table)->count();
+    }
+
+    /**
+     * Fetch data with pagination
+     * Expects $limit_clause from pagination library
+     *
+     * @param string $limit_clause
+     * @return array
+     */
+    public function get_paginated($limit_clause)
+    {
+        $sql = "SELECT * FROM {$this->table} {$limit_clause}";
+        return $this->db->raw($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
