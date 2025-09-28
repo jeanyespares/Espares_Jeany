@@ -36,7 +36,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
-|   Config Files
+|  Config Files
 | -------------------------------------------------------------------
 | This file is for setting-up default settings.
 |
@@ -44,7 +44,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
-|   Your Own Configs
+|  Your Own Configs
 | -------------------------------------------------------------------
 | For easy access on your config, just put them below
 | You can simply get configs using config_item() function anywhere
@@ -56,7 +56,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 | LavaLust Version
 | -------------------------------------------------------------------
 */
-$config['VERSION'] = '4.2.4';
+$config['VERSION']                 = '4.2.4';
 
 /*
 | -------------------------------------------------------------------
@@ -64,7 +64,7 @@ $config['VERSION'] = '4.2.4';
 | -------------------------------------------------------------------
 | Values: development and production
 */
-$config['ENVIRONMENT'] = 'development';
+$config['ENVIRONMENT']             = 'development';
 
 /*
 |--------------------------------------------------------------------------
@@ -74,12 +74,12 @@ $config['ENVIRONMENT'] = 'development';
 | URL to your LavaLust root. Typically this will be your base URL,
 | WITH a trailing slash:
 |
-|   http://example.com/
+|	http://example.com/
 |
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] = 'https://espares-jeany.onrender.com';
+$config['base_url'] 				= 'https://espares-jeany.onrender.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ $config['base_url'] = 'https://espares-jeany.onrender.com';
 | variable to blank.
 |
 */
-$config['index_page'] = ''; // FINAL URL FIX: Dapat blanko ito para gumana ang base_url('index.php/...')
+$config['index_page']               = 'index.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -99,14 +99,14 @@ $config['index_page'] = ''; // FINAL URL FIX: Dapat blanko ito para gumana ang b
 |
 | You can enable error logging by setting a threshold over zero.
 |
-|   0 = Disables logging
-|   1 = Exception and Error Messages
+|	0 = Disables logging
+|	1 = Exception and Error Messages
 |   2 = Debug
 |   3 = All
 |
 */
-$config['log_threshold'] = 0;
-$config['log_dir'] = 'runtime/logs/';
+$config['log_threshold']            = 0;
+$config['log_dir']                  = 'runtime/logs/';
 
 /*
 |--------------------------------------------------------------------------
@@ -116,19 +116,19 @@ $config['log_dir'] = 'runtime/logs/';
 | Enabling this setting will tell LavaLust to look for a Composer
 | package auto-loader script in app/vendor/autoload.php.
 |
-|   $config['composer_autoload'] = TRUE;
+|	$config['composer_autoload'] = TRUE;
 |
 | Or if you have your vendor/ directory located somewhere else, you
 | can opt to set a specific path as well:
 |
-|   $config['composer_autoload'] = '/path/to/vendor/autoload.php';
+|	$config['composer_autoload'] = '/path/to/vendor/autoload.php';
 |
 | For more information about Composer, please visit http://getcomposer.org/
 |
 | Note: This will NOT disable or override the LavaLust-specific
-|   autoloading (app/config/autoload.php)
+|	autoloading (app/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload']        = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,7 +140,7 @@ $config['composer_autoload'] = FALSE;
 | get a warning message.
 |
 | As a security measure you are STRONGLY encouraged to restrict URLs to
-| as few characters as possible.    By default only these are allowed: a-z 0-9~%.:_-
+| as few characters as possible.  By default only these are allowed: a-z 0-9~%.:_-
 |
 | Leave blank to allow all characters -- but only if you are insane.
 |
@@ -150,7 +150,7 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars']		= 'a-z 0-9~%.:_\-';
 
 /*
 |--------------------------------------------------------------------------
@@ -160,17 +160,17 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | This config will be use html_escape function
 |
 */
-$config['charset'] = 'UTF-8';
+$config['charset']					= 'UTF-8';
 
 /*
 |--------------------------------------------------------------------------
 | Error Views Directory Path
 |--------------------------------------------------------------------------
 |
-| app/views/errors/ directory.    Use a full server path with trailing slash.
+| app/views/errors/ directory.  Use a full server path with trailing slash.
 |
 */
-$config['error_view_path'] = '';
+$config['error_view_path']         	= '';
 
 /*
 |--------------------------------------------------------------------------
@@ -179,12 +179,12 @@ $config['error_view_path'] = '';
 |
 | $config['404_override'] is use if you want to add custom 404 error page.
 |
-|   example: $confg['404_override'] = 'default/404'
+|	example: $confg['404_override'] = 'default/404'
 |
-|   if you have 'default folder' and '404.php file' inside error folder in view
+|	if you have 'default folder' and '404.php file' inside error folder in view
 |
 */
-$config['404_override'] = '';
+$config['404_override']       	    = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -196,7 +196,7 @@ $config['404_override'] = '';
 | than en-US.
 |
 */
-$config['language'] = 'en-US';
+$config['language'] 				= 'en-US';
 
 /*
 |--------------------------------------------------------------------------
@@ -209,15 +209,15 @@ $config['language'] = 'en-US';
 |
 |--------------------------------------------------------------------------
 */
-$config['sess_driver'] = 'file';
-$config['sess_cookie_name'] = 'LLSession';
-$config['sess_expiration'] = 7200;
-$config['sess_save_path'] = '/var/www/html/writable/session';
-$config['sess_match_ip'] = TRUE;
-$config['sess_match_fingerprint'] = TRUE;
-$config['sess_time_to_update'] = 300;
+$config['sess_driver']             = 'file';
+$config['sess_cookie_name']        = 'LLSession';
+$config['sess_expiration']         = 7200;
+$config['sess_save_path']          = '/var/www/html/writable/session';
+$config['sess_match_ip']           = TRUE;
+$config['sess_match_fingerprint']  = TRUE;
+$config['sess_time_to_update']     = 300;
 $config['sess_regenerate_destroy'] = TRUE;
-$config['sess_expire_on_close'] = FALSE;
+$config['sess_expire_on_close']    = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -228,13 +228,13 @@ $config['sess_expire_on_close'] = FALSE;
 |
 |--------------------------------------------------------------------------
 */
-$config['cookie_prefix'] = '';
-$config['cookie_domain'] = '';
-$config['cookie_path'] = '/';
-$config['cookie_secure'] = FALSE;
-$config['cookie_expiration'] = 86400;
-$config['cookie_httponly'] = FALSE;
-$config['cookie_samesite'] = 'Lax';
+$config['cookie_prefix']           = '';
+$config['cookie_domain']           = '';
+$config['cookie_path']             = '/';
+$config['cookie_secure']           = FALSE;
+$config['cookie_expiration']       = 86400;
+$config['cookie_httponly']         = FALSE;
+$config['cookie_samesite']         = 'Lax';
 
 /*
 |--------------------------------------------------------------------------
@@ -249,8 +249,8 @@ $config['cookie_samesite'] = 'Lax';
 |
 |--------------------------------------------------------------------------
 */
-$config['cache_dir'] = 'runtime/cache/';
-$config['cache_default_expires'] = 0;
+$config['cache_dir']               = 'runtime/cache/';
+$config['cache_default_expires']   = 0;
 
 /*
 |--------------------------------------------------------------------------
@@ -261,7 +261,7 @@ $config['cache_default_expires'] = 0;
 |
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key']           = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -275,8 +275,8 @@ $config['encryption_key'] = '';
 |   $config['soft_delete_column'] = 'deleted_at;
 |
 */
-$config['soft_delete'] = FALSE;
-$config['soft_delete_column'] = 'deleted_at';
+$config['soft_delete']              = FALSE;
+$config['soft_delete_column']       = 'deleted_at';
 
 /*
 |--------------------------------------------------------------------------
@@ -291,10 +291,10 @@ $config['soft_delete_column'] = 'deleted_at';
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-$config['csrf_protection'] = FALSE;
-$config['csrf_exclude_uris'] = array();
-$config['csrf_token_name'] = 'csrf_test_name';
-$config['csrf_cookie_name'] = 'csrf_cookie_name';
-$config['csrf_expire'] = 7200;
-$config['csrf_regenerate'] = FALSE;
+$config['csrf_protection']         = FALSE;
+$config['csrf_exclude_uris']       = array();
+$config['csrf_token_name']         = 'csrf_test_name';
+$config['csrf_cookie_name']        = 'csrf_cookie_name';
+$config['csrf_expire']             = 7200;
+$config['csrf_regenerate']         = FALSE;
 ?>
