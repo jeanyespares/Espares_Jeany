@@ -51,7 +51,7 @@
       <p class="text-gray-400 text-sm tracking-wide mt-1">Step into the future of learning </p>
     </div>
 
-    <form action="<?= site_url('users/create') ?>" method="POST" class="space-y-6">
+    <form action="<?= base_url('index.php/users/create') ?>" method="POST" class="space-y-6">
       
       <div>
         <label class="block text-cyan-300 mb-1 font-medium tracking-wide">First Name</label>

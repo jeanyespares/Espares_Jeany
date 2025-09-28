@@ -50,7 +50,7 @@ class UsersController extends Controller {
             $total_rows,
             $records_per_page,
             $page,
-            site_url('users') . '?q=' . urlencode($q) // Added 'users' to base_url for pagination
+            base_url('index.php/users') . '?q=' . urlencode($q) // Using base_url('index.php/...')
         );
 
         $data['links'] = $this->pagination->paginate();
@@ -62,14 +62,14 @@ class UsersController extends Controller {
     public function create()
     {
         if($this->io->method() == 'post'){
-            // BUG FIX: Changed 'fname' and 'lname' keys to match 'first_name' and 'last_name' from the form
+            // BUG FIX: Tumutugma na ang 'fname' at 'lname' sa 'first_name' at 'last_name' ng form.
             $data = [
                 'fname'=> $this->io->post('first_name'), 
                 'lname'=> $this->io->post('last_name'), 
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->insert($data)) {
-                redirect('users'); // FIX: Redirect to user list after success
+                redirect('users'); // FIX: Redirect sa user list pagkatapos
             } else {
                 echo 'Error inserting user.';
             }
@@ -89,9 +89,9 @@ class UsersController extends Controller {
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->update($id, $data)) {
-                redirect('users'); // FIX: Redirect to user list after success
+                redirect('users'); // FIX: Redirect sa user list
             } else {
-                redirect('users'); // Redirect to user list even if update fails (to avoid error loop)
+                redirect('users');
             }
         }
         $this->call->view('users/update', $data);
@@ -101,22 +101,11 @@ class UsersController extends Controller {
     public function delete($id)
     {
         if($this->UsersModel->delete($id)) {
-            redirect('users'); // FIX: Redirect to user list after success
+            redirect('users'); // FIX: Redirect sa user list
         } else {
             echo 'Error deleting user.';
         }
     }
 
-    // Soft delete (Note: Not implemented in UsersModel, but kept for completeness)
-    public function soft_delete($id)
-    {
-        if($this->UsersModel->soft_delete($id)) {
-            redirect('users');
-        } else {
-            echo 'Error soft-deleting user.';
-        }
-    }
-    
-    // Restore list and retrieve methods are omitted for brevity as they are not part of the initial bug fixing.
-    // ...
+    // Soft delete at Restore functions ay inalis (omitted) para mag-focus sa main issue
 }

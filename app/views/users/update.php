@@ -29,7 +29,7 @@
 
       <h2 class="text-2xl font-semibold text-center text-sky-600 mb-6">Update Profile</h2>
 
-      <form action="<?= site_url('users/update/'.$user['id']) ?>" method="POST" class="space-y-5">
+      <form action="<?= base_url('index.php/users/update/'.$user['id']) ?>" method="POST" class="space-y-5">
         <?= csrf_field() ?>
 
         <div>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="flex justify-between gap-3">
-          <a href="<?= site_url('users') ?>"
+          <a href="<?= base_url('index.php/users') ?>"
              class="w-1/2 text-center bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-3 rounded-xl shadow transition">
             <i class="fa-solid fa-arrow-left mr-2"></i> Back
           </a>
