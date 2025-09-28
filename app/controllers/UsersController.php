@@ -1,27 +1,44 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
+/**
+ * Controller: UsersController
+ */
 class UsersController extends Controller {
-
+    
     public function __construct()
     {
         parent::__construct();
         $this->call->model('UsersModel');
         $this->call->library('pagination');
-        $this->call->helper('url');
+        $this->call->helper('url'); // FIX: Load URL helper for reliable base_url()
     }
-
-    // 📋 List users with pagination + optional search
+    
+    // List users with pagination + search
     public function index()
     {
-        $page = $this->io->get('page') ? (int) $this->io->get('page') : 1;
-        $q = $this->io->get('q') ? trim($this->io->get('q')) : '';
-        $records_per_page = 5;
+        // Current page
+        $page = 1;
+        if ($this->io->get('page')) {
+            $page = (int) $this->io->get('page');
+        }
 
-        $result = $this->UsersModel->page($q, $records_per_page, $page);
-        $data['users'] = $result['records'];
-        $total_rows = $result['total_rows'];
+        // Search query
+        $q = '';
+        if ($this->io->get('q')) {
+            $q = trim($this->io->get('q'));
+        }
 
+        $records_per_page = 5; 
+
+        // Fetch records
+        $all = $this->UsersModel->page($q, $records_per_page, $page);
+        
+        // FIX: Extract data correctly for table and pagination
+        $data['users'] = $all['records']; 
+        $total_rows = $all['total_rows']; 
+
+        // Pagination setup
         $this->pagination->set_options([
             'first_link'     => '⏮ First',
             'last_link'      => 'Last ⏭',
@@ -29,70 +46,67 @@ class UsersController extends Controller {
             'prev_link'      => '← Prev',
             'page_delimiter' => '&page='
         ]);
+        
         $this->pagination->set_theme('default');
+        
         $this->pagination->initialize(
             $total_rows,
             $records_per_page,
             $page,
-            base_url('users') . '?q=' . urlencode($q)
+            base_url('index.php/users') . '?q=' . urlencode($q) // FINAL URL FIX
         );
 
         $data['links'] = $this->pagination->paginate();
+
         $this->call->view('users/index', $data);
     }
 
-    // ➕ Show form to create user
+    // Create user
     public function create()
     {
-        $this->call->view('users/create');
-    }
-
-    // ✅ Handle form submission to store user
-    public function store()
-    {
-        $data = [
-            'fname' => $this->io->post('fname'),
-            'lname' => $this->io->post('lname'),
-            'email' => $this->io->post('email')
-        ];
-
-        if ($this->UsersModel->insert($data)) {
-            redirect(base_url('users'));
+        if($this->io->method() == 'post'){
+            // FIX: Correct field names matching create.php input names
+            $data = [
+                'fname'=> $this->io->post('first_name'), 
+                'lname'=> $this->io->post('last_name'), 
+                'email'=> $this->io->post('email')
+            ];
+            if($this->UsersModel->insert($data)) {
+                redirect(base_url('users/index.php')); // FINAL URL FIX
+            } else {
+                echo 'Error inserting user.';
+            }
         } else {
-            echo '<div class="text-red-500 text-center mt-4">❌ Error inserting user.</div>';
+            $this->call->view('users/create');
         }
     }
 
-    // ✏️ Show form to update user
-    public function edit($id)
+    // Update user
+    public function update($id)
     {
         $data['user'] = $this->UsersModel->find($id);
+        if($this->io->method() == 'post'){
+            $data = [
+                'fname'=> $this->io->post('fname'),
+                'lname'=> $this->io->post('lname'),
+                'email'=> $this->io->post('email')
+            ];
+            if($this->UsersModel->update($id, $data)) {
+                redirect(base_url('users/index.php')); // FINAL URL FIX
+            } else {
+                redirect(base_url('users/index.php')); // FINAL URL FIX
+            }
+        }
         $this->call->view('users/update', $data);
     }
 
-    // ✅ Handle update submission
-    public function update($id)
-    {
-        $payload = [
-            'fname' => $this->io->post('fname'),
-            'lname' => $this->io->post('lname'),
-            'email' => $this->io->post('email')
-        ];
-
-        if ($this->UsersModel->update($id, $payload)) {
-            redirect(base_url('users'));
-        } else {
-            echo '<div class="text-red-500 text-center mt-4">❌ Error updating user.</div>';
-        }
-    }
-
-    // 🗑 Delete user
+    // Hard delete
     public function delete($id)
     {
-        if ($this->UsersModel->delete($id)) {
-            redirect(base_url('users'));
+        if($this->UsersModel->delete($id)) {
+            redirect(base_url('users/index.php')); // FINAL URL FIX
         } else {
-            echo '<div class="text-red-500 text-center mt-4">❌ Error deleting user.</div>';
+            echo 'Error deleting user.';
         }
     }
 }
