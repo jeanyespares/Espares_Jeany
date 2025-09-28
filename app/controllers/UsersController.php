@@ -33,7 +33,7 @@ class UsersController extends Controller {
         // Fetch records
         $all = $this->UsersModel->page($q, $records_per_page, $page);
         
-        // FIX for Undefined variable $total_rows: Extract data correctly
+        // FIX: Extract data correctly
         $data['users'] = $all['records']; 
         $total_rows = $all['total_rows']; 
 
@@ -71,12 +71,12 @@ class UsersController extends Controller {
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->insert($data)) {
-                redirect(base_url('index.php/users')); // Render URL FIX
+                redirect(base_url('index.php/users')); // FINAL FIX: Gamitin ang base_url sa redirect
             } else {
-                // If you want to show an error or validation message here
                 echo 'Error inserting user.';
             }
         } else {
+            // Ito ang nagpapakita ng form, kapag tama ang URL na na-access, DITO mapupunta.
             $this->call->view('users/create');
         }
     }
