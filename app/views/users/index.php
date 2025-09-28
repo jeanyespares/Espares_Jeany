@@ -52,8 +52,7 @@
           <thead class="sticky top-0 z-10 shadow bg-gradient-to-r from-sky-400 to-pink-300 text-white text-sm uppercase tracking-wide">
             <tr>
               <th class="py-3 px-4">ID</th>
-              <th class="py-3 px-4">Last Name</th>
-              <th class="py-3 px-4">First Name</th> 
+              <th class="py-3 px-4">Last Name</th> <th class="py-3 px-4">First Name</th> 
               <th class="py-3 px-4">Email</th>
               <th class="py-3 px-4">Action</th>
             </tr>
