@@ -72,7 +72,7 @@ class UsersController extends Controller {
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->insert($data)) {
-                redirect(base_url('index.php/users')); // FINAL URL FIX
+                redirect(base_url('users/index.php')); // FINAL URL FIX
             } else {
                 echo 'Error inserting user.';
             }
@@ -92,9 +92,9 @@ class UsersController extends Controller {
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->update($id, $data)) {
-                redirect(base_url('index.php/users')); // FINAL URL FIX
+                redirect(base_url('users/index.php')); // FINAL URL FIX
             } else {
-                redirect(base_url('index.php/users')); // FINAL URL FIX
+                redirect(base_url('users/index.php')); // FINAL URL FIX
             }
         }
         $this->call->view('users/update', $data);
@@ -104,7 +104,7 @@ class UsersController extends Controller {
     public function delete($id)
     {
         if($this->UsersModel->delete($id)) {
-            redirect(base_url('index.php/users')); // FINAL URL FIX
+            redirect(base_url('users/index.php')); // FINAL URL FIX
         } else {
             echo 'Error deleting user.';
         }
