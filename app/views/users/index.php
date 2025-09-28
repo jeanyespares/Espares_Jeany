@@ -41,7 +41,7 @@
       <h2 class="text-xl font-semibold text-sky-600 mb-4">Registered BSIT Students</h2>
 
       <div class="flex justify-end mb-6">
-        <a href="<?= base_url('index.php/users/create') ?>"
+        <a href="<?= base_url('users/create') ?>"
            class="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-pink-400 hover:from-sky-600 hover:to-pink-500 text-white font-semibold px-5 py-2 rounded-full shadow-md transition-all duration-300 hover:scale-105">
           <i class="fa-solid fa-user-plus"></i> Create New User
         </a>
