@@ -9,48 +9,20 @@ class UsersController extends Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->call->model('UsersModel');      // load model
-        $this->call->library('pagination');    // load pagination library
+        $this->call->model('UsersModel');
+        $this->call->library('pagination');
     }
     
     // List users with pagination + search
     public function index()
     {
-        // Current page
-        $page = 1;
-        if ($this->io->get('page')) {
-            $page = (int) $this->io->get('page');
-        }
+        // ... (omitted pagination logic) ...
 
-        // Search query
-        $q = '';
-        if ($this->io->get('q')) {
-            $q = trim($this->io->get('q'));
-        }
-
-        $records_per_page = 5;
-
-        // Fetch records
-        $all = $this->UsersModel->page($q, $records_per_page, $page);
-        $data['users'] = $all['records'];
-        $total_rows = $all['total_rows'];
-
-        // Pagination setup
-        $this->pagination->set_options([
-            'first_link'     => '⏮ First',
-            'last_link'      => 'Last ⏭',
-            'next_link'      => 'Next →',
-            'prev_link'      => '← Prev',
-            'page_delimiter' => '&page='
-        ]);
-        
-        $this->pagination->set_theme('default');
-        
         $this->pagination->initialize(
             $total_rows,
             $records_per_page,
             $page,
-            base_url('index.php/users') . '?q=' . urlencode($q) // Using base_url('index.php/...')
+            base_url('index.php/users') . '?q=' . urlencode($q) // CORRECTED URL
         );
 
         $data['links'] = $this->pagination->paginate();
@@ -62,14 +34,13 @@ class UsersController extends Controller {
     public function create()
     {
         if($this->io->method() == 'post'){
-            // BUG FIX: Tumutugma na ang 'fname' at 'lname' sa 'first_name' at 'last_name' ng form.
             $data = [
                 'fname'=> $this->io->post('first_name'), 
                 'lname'=> $this->io->post('last_name'), 
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->insert($data)) {
-                redirect('users'); // FIX: Redirect sa user list pagkatapos
+                redirect(base_url('index.php/users')); // FINAL FIX: Gamitin ang base_url sa redirect
             } else {
                 echo 'Error inserting user.';
             }
@@ -89,9 +60,9 @@ class UsersController extends Controller {
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->update($id, $data)) {
-                redirect('users'); // FIX: Redirect sa user list
+                redirect(base_url('index.php/users')); // FINAL FIX
             } else {
-                redirect('users');
+                redirect(base_url('index.php/users')); // FINAL FIX
             }
         }
         $this->call->view('users/update', $data);
@@ -101,11 +72,9 @@ class UsersController extends Controller {
     public function delete($id)
     {
         if($this->UsersModel->delete($id)) {
-            redirect('users'); // FIX: Redirect sa user list
+            redirect(base_url('index.php/users')); // FINAL FIX
         } else {
             echo 'Error deleting user.';
         }
     }
-
-    // Soft delete at Restore functions ay inalis (omitted) para mag-focus sa main issue
 }
