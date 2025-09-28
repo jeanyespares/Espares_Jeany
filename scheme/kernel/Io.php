@@ -28,126 +28,62 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  * THE SOFTWARE.
  *
  * @package LavaLust
- * @author Ronald M. Marasigan <ronald.marasigan@yahoo.com>
+ * @author Ronald M. Marasigan
  * @since Version 1
  * @link https://github.com/ronmarasigan/LavaLust
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-/**
-* ------------------------------------------------------
-*  Class IO
-* ------------------------------------------------------
- */
 Class Io {
 
-	/**
-	 * If CSRF Protection is enables, csrf_verify() will
-	 * run
-	 *
-	 * @var boolean
-	 */
 	private $_enable_csrf = FALSE;
-
-	/**
-	 * Securty instance
-	 *
-	 * @var class
-	 */
 	private $security;
-
-	/**
-	 * Status Code
-	 *
-	 * @var int
-	 */
 	private $status_code;
-
-	/**
-	 * Request Headers
-	 *
-	 * @var array
-	 */
     private $headers = [];
-
-	/**
-	 * Content
-	 *
-	 * @var mixed
-	 */
     private $content;
 
-	/**
-	 * Class constructor
-	 */
 	public function __construct()
 	{
-		/**
-		 * Load Security Instance
-		 *
-		 * @var class
-		 */
 		$this->security =& load_class('Security', 'kernel');
-
-		/**
-		 * Check CSRF Protection if enabled
-		 *
-		 * @var boolean
-		 */
 		$this->_enable_csrf	= (config_item('csrf_protection') === TRUE);
 
-		/**
-		 * Check CSRF Protection
-		 *
-		 * @var
-		 */
-		if ($this->_enable_csrf === TRUE)
-		{
+		if ($this->_enable_csrf === TRUE) {
 			$this->security->csrf_validate();
 		}
 	}
 
   	/**
   	 * POST Variable
-  	 *
-  	 * @param  string
-  	 * @return string
   	 */
 	public function post($index = NULL)
 	{
-		if($index === NULL && !empty($_POST)) {
+		if ($index === NULL && !empty($_POST)) {
 			$post = array();
 			foreach($_POST as $key => $value) {
 				$post[$key] = $value;
 			}
 			return $post;
 		}
-		return $_POST[$index];
+		return isset($_POST[$index]) ? $_POST[$index] : null;
 	}
 
 	/**
   	 * GET Variable
-  	 *
-  	 * @param  string
-  	 * @return string
   	 */
 	public function get($index = NULL)
 	{
-		if($index === NULL && !empty($_GET)) {
+		if ($index === NULL && !empty($_GET)) {
 			$get = array();
 			foreach($_GET as $key => $value) {
 				$get[$key] = $value;
 			}
 			return $get;
 		}
-		return $_GET[$index];
+		return isset($_GET[$index]) ? $_GET[$index] : null;
 	}
 
 	/**
 	 * POST and GET
-	 *
-	 * @param string $index
-	 * @return string
 	 */
 	public function post_get($index = NULL)
 	{
@@ -155,11 +91,8 @@ Class Io {
 		return isset($output) ? $output : $this->get($index);
 	}
 
-		/**
+	/**
 	 * GET and POST
-	 *
-	 * @param string $index
-	 * @return string
 	 */
 	public function get_post($index = NULL)
 	{
@@ -169,66 +102,46 @@ Class Io {
 
 	/**
 	 * Cookie Variable
-	 *
-	 * @param string $index
-	 * @return string
 	 */
 	public function cookie($index = NULL)
 	{
-		if($index === NULL && !empty($_COOKIE)) {
+		if ($index === NULL && !empty($_COOKIE)) {
 			$cookie = array();
 			foreach($_COOKIE as $key => $value) {
 				$cookie[$key] = $value;
 			}
 			return $cookie;
 		}
-		return $_COOKIE[$index];
+		return isset($_COOKIE[$index]) ? $_COOKIE[$index] : null;
 	}
 
 	/**
 	 * Set cookie in your application
-	 *
-	 * @param string $name
-	 * @param string $value
-	 * @param string $expiration
-	 * @param array $options
-	 * @return void
 	 */
 	public function set_cookie($name, $value = '', $expiration = 0, $options = array())
 	{
-		//list of defaults
 		$lists = array('prefix', 'path', 'domain', 'secure', 'httponly', 'samesite');
-
-		//hold options elements
 		$arr = array();
 
-		if(is_array($options))
-		{
-			if(count($options) > 0)
-			{
-				foreach($options as $key => $val)
-				{
-					if(isset($options[$key]) && $options[$key] != 'expiration')
-					{
-						$arr[$key] = $val;
-					} else {
-						$arr[$key] = config_item('cookie_' . $key);
-					}
-					$pos = array_search($key, $lists);
-					unset($lists[$pos]);
+		if (is_array($options) && count($options) > 0) {
+			foreach($options as $key => $val) {
+				if (isset($options[$key]) && $options[$key] != 'expiration') {
+					$arr[$key] = $val;
+				} else {
+					$arr[$key] = config_item('cookie_' . $key);
 				}
+				$pos = array_search($key, $lists);
+				unset($lists[$pos]);
 			}
 		}
 
-		if(! is_numeric($expiration) || $expiration < 0)
-		{
+		if (!is_numeric($expiration) || $expiration < 0) {
 			$arr['expiration'] = 1;
 		} else {
-			$arr['expiration'] =  ($expiration > 0) ? time() + $expiration : 0;
+			$arr['expiration'] = ($expiration > 0) ? time() + $expiration : 0;
 		}
 
-		foreach($lists as $key)
-		{
+		foreach($lists as $key) {
 			$arr[$key] = config_item('cookie_' . $key);
 		}
 
@@ -245,28 +158,21 @@ Class Io {
 
 	/**
 	 * Server
-	 *
-	 * @param string $index
-	 * @return string
 	 */
 	public function server($index = NULL)
 	{
-		if($index === NULL && !empty($_SERVER)) {
+		if ($index === NULL && !empty($_SERVER)) {
 			$server = array();
 			foreach($_SERVER as $key => $value) {
 				$server[$key] = $value;
 			}
 			return $server;
 		}
-		return $_SERVER[$index];
+		return isset($_SERVER[$index]) ? $_SERVER[$index] : null;
 	}
 
 	/**
 	 * Method
-	 *
-	 * @param boolean $upper	Whether to return in upper or lower case
-	 *				(default: FALSE)
-	 * @return string
 	 */
 	public function method($upper = FALSE)
 	{
@@ -277,8 +183,6 @@ Class Io {
 
 	/**
 	 * Get IP Address
-	 *
-	 * @return string
 	 */
 	public function ip_address() {
 		$trustedHeaders = ['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_REAL_IP'];
@@ -289,21 +193,15 @@ Class Io {
 			}
 		}
 
-		// Fallback to REMOTE_ADDR if no trusted headers found
-		return $_SERVER['REMOTE_ADDR'];
+		return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 	}
 
 	/**
 	 * Validate IP Address
-	 *
-	 * @param	string	$ip	IP address
-	 * @param	string	$which	IP protocol: 'ipv4' or 'ipv6'
-	 * @return	boolean
 	 */
 	public function valid_ip($ip, $which = '')
 	{
-		switch (strtolower($which))
-		{
+		switch (strtolower($which)) {
 			case 'ipv4':
 				$which = FILTER_FLAG_IPV4;
 				break;
@@ -320,8 +218,6 @@ Class Io {
 
 	/**
 	 * Is Ajax
-	 *
-	 * @return boolean
 	 */
 	public function is_ajax() {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
@@ -329,9 +225,6 @@ Class Io {
 
 	/**
 	 * Set Status Code
-	 *
-	 * @param int $status_code
-	 * @return void
 	 */
 	public function set_status_code($status_code) {
         $this->status_code = $status_code;
@@ -339,13 +232,9 @@ Class Io {
 
 	/**
 	 * Add header
-	 *
-	 * @param mixed $name
-	 * @param string $value
-	 * @return void
 	 */
 	public function add_header($name, $value) {
-		if(is_array($name)) {
+		if (is_array($name)) {
 			foreach($name as $key => $value) {
 				$this->headers[$key] = $value;
 			}
@@ -356,9 +245,6 @@ Class Io {
 
 	/**
 	 * Set Content
-	 *
-	 * @param mixed $content
-	 * @return void
 	 */
     public function set_content($content) {
         $this->content = $content;
@@ -366,9 +252,6 @@ Class Io {
 
 	/**
 	 * HTML Content
-	 *
-	 * @param mixed $content
-	 * @return mixed
 	 */
 	public function set_html_content($content) {
         $this->add_header('Content-Type', 'text/html');
@@ -377,8 +260,6 @@ Class Io {
 
 	/**
 	 * Send Response
-	 *
-	 * @return void
 	 */
     public function send() {
         http_response_code($this->status_code);
@@ -392,9 +273,6 @@ Class Io {
 
 	/**
 	 * Json Encode
-	 *
-	 * @param string $data
-	 * @return void
 	 */
     public function send_json($data) {
         $this->add_header('Content-Type', 'application/json');
@@ -402,5 +280,4 @@ Class Io {
         $this->send();
     }
 }
-
 ?>
