@@ -16,7 +16,6 @@
 </head>
 <body class="min-h-screen flex flex-col text-sm text-slate-700">
 
-  <!-- Navbar -->
   <nav class="bg-gradient-to-r from-sky-400 to-pink-300 shadow-md">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="text-white font-semibold text-lg tracking-wide">
@@ -25,7 +24,6 @@
     </div>
   </nav>
 
-  <!-- Update Form -->
   <div class="flex-grow flex items-center justify-center px-4">
     <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-lg border border-sky-200 animate-fadeIn">
 
@@ -34,7 +32,6 @@
       <form action="<?= site_url('users/update/'.$user['id']) ?>" method="POST" class="space-y-5">
         <?= csrf_field() ?>
 
-        <!-- First Name -->
         <div>
           <label class="block text-slate-700 mb-1 font-medium">First Name</label>
           <div class="relative">
@@ -44,7 +41,6 @@
           </div>
         </div>
 
-        <!-- Last Name -->
         <div>
           <label class="block text-slate-700 mb-1 font-medium">Last Name</label>
           <div class="relative">
@@ -54,7 +50,6 @@
           </div>
         </div>
 
-        <!-- Email -->
         <div>
           <label class="block text-slate-700 mb-1 font-medium">Email Address</label>
           <div class="relative">
@@ -64,7 +59,6 @@
           </div>
         </div>
 
-        <!-- Buttons -->
         <div class="flex justify-between gap-3">
           <a href="<?= site_url('users') ?>"
              class="w-1/2 text-center bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-3 rounded-xl shadow transition">

@@ -39,10 +39,8 @@
 </head>
 <body class="min-h-screen flex items-center justify-center font-sans text-gray-200">
 
-  <!-- SIGN UP CARD -->
   <div class="bg-black/40 backdrop-blur-xl p-8 rounded-3xl glow-border w-full max-w-md animate-fadeIn">
 
-    <!-- Header Icon + Title -->
     <div class="flex flex-col items-center mb-6">
       <div class="bg-gradient-to-br from-cyan-500 to-purple-600 rounded-full p-4 shadow-lg icon-pulse">
         <i class="fa-solid fa-user-astronaut text-white text-3xl"></i>
@@ -53,10 +51,8 @@
       <p class="text-gray-400 text-sm tracking-wide mt-1">Step into the future of learning </p>
     </div>
 
-    <!-- Form -->
     <form action="<?= site_url('users/create') ?>" method="POST" class="space-y-6">
       
-      <!-- First Name -->
       <div>
         <label class="block text-cyan-300 mb-1 font-medium tracking-wide">First Name</label>
         <input type="text" name="first_name" placeholder="Enter your first name" required
@@ -64,7 +60,6 @@
                       focus:ring-2 focus:ring-cyan-400 focus:outline-none transition duration-200">
       </div>
 
-      <!-- Last Name -->
       <div>
         <label class="block text-cyan-300 mb-1 font-medium tracking-wide">Last Name</label>
         <input type="text" name="last_name" placeholder="Enter your last name" required
@@ -72,7 +67,6 @@
                       focus:ring-2 focus:ring-cyan-400 focus:outline-none transition duration-200">
       </div>
 
-      <!-- Email -->
       <div>
         <label class="block text-cyan-300 mb-1 font-medium tracking-wide">Email Address</label>
         <input type="email" name="email" placeholder="Enter your email" required
@@ -80,7 +74,6 @@
                       focus:ring-2 focus:ring-cyan-400 focus:outline-none transition duration-200">
       </div>
 
-      <!-- Sign Up Button -->
       <button type="submit"
               class="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-purple-600 hover:to-pink-600
                      text-white font-semibold py-3 rounded-xl shadow-lg transition duration-300
