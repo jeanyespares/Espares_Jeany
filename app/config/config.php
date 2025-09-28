@@ -36,7 +36,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
-| 	Config Files
+|   Config Files
 | -------------------------------------------------------------------
 | This file is for setting-up default settings.
 |
@@ -44,7 +44,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
-| 	Your Own Configs
+|   Your Own Configs
 | -------------------------------------------------------------------
 | For easy access on your config, just put them below
 | You can simply get configs using config_item() function anywhere
@@ -74,7 +74,7 @@ $config['ENVIRONMENT'] = 'development';
 | URL to your LavaLust root. Typically this will be your base URL,
 | WITH a trailing slash:
 |
-| 	http://example.com/
+|   http://example.com/
 |
 | WARNING: You MUST set this value!
 |
@@ -90,7 +90,7 @@ $config['base_url'] = 'https://espares-jeany.onrender.com';
 | variable to blank.
 |
 */
-$config['index_page'] = ''; // FIX: Ginawang blanko para maayos ang URL at magamit ang base_url('index.php/...')
+$config['index_page'] = ''; // FINAL URL FIX: Dapat blanko ito para gumana ang base_url('index.php/...')
 
 /*
 |--------------------------------------------------------------------------
@@ -99,10 +99,10 @@ $config['index_page'] = ''; // FIX: Ginawang blanko para maayos ang URL at magam
 |
 | You can enable error logging by setting a threshold over zero.
 |
-| 	0 = Disables logging
-| 	1 = Exception and Error Messages
-| 	2 = Debug
-| 	3 = All
+|   0 = Disables logging
+|   1 = Exception and Error Messages
+|   2 = Debug
+|   3 = All
 |
 */
 $config['log_threshold'] = 0;
@@ -116,17 +116,17 @@ $config['log_dir'] = 'runtime/logs/';
 | Enabling this setting will tell LavaLust to look for a Composer
 | package auto-loader script in app/vendor/autoload.php.
 |
-| 	$config['composer_autoload'] = TRUE;
+|   $config['composer_autoload'] = TRUE;
 |
 | Or if you have your vendor/ directory located somewhere else, you
 | can opt to set a specific path as well:
 |
-| 	$config['composer_autoload'] = '/path/to/vendor/autoload.php';
+|   $config['composer_autoload'] = '/path/to/vendor/autoload.php';
 |
 | For more information about Composer, please visit http://getcomposer.org/
 |
 | Note: This will NOT disable or override the LavaLust-specific
-| 	autoloading (app/config/autoload.php)
+|   autoloading (app/config/autoload.php)
 */
 $config['composer_autoload'] = FALSE;
 
@@ -140,7 +140,7 @@ $config['composer_autoload'] = FALSE;
 | get a warning message.
 |
 | As a security measure you are STRONGLY encouraged to restrict URLs to
-| as few characters as possible. 	By default only these are allowed: a-z 0-9~%.:_-
+| as few characters as possible.    By default only these are allowed: a-z 0-9~%.:_-
 |
 | Leave blank to allow all characters -- but only if you are insane.
 |
@@ -167,7 +167,7 @@ $config['charset'] = 'UTF-8';
 | Error Views Directory Path
 |--------------------------------------------------------------------------
 |
-| app/views/errors/ directory. 	Use a full server path with trailing slash.
+| app/views/errors/ directory.    Use a full server path with trailing slash.
 |
 */
 $config['error_view_path'] = '';
@@ -179,9 +179,9 @@ $config['error_view_path'] = '';
 |
 | $config['404_override'] is use if you want to add custom 404 error page.
 |
-| 	example: $confg['404_override'] = 'default/404'
+|   example: $confg['404_override'] = 'default/404'
 |
-| 	if you have 'default folder' and '404.php file' inside error folder in view
+|   if you have 'default folder' and '404.php file' inside error folder in view
 |
 */
 $config['404_override'] = '';
@@ -244,8 +244,8 @@ $config['cookie_samesite'] = 'Lax';
 | Settings for Cache
 | Set your cache directory and cache expiration time here
 | Default:
-| 	$config['cache_dir'] = 'runtime/cache/';
-| 	$config['cache_default_expires'] = 0;
+|   $config['cache_dir'] = 'runtime/cache/';
+|   $config['cache_default_expires'] = 0;
 |
 |--------------------------------------------------------------------------
 */
@@ -271,8 +271,8 @@ $config['encryption_key'] = '';
 | If you use the Encryption class, you must set an encryption key.
 |
 | Default:
-| 	$config['soft_delete'] 	= FALSE;
-| 	$config['soft_delete_column'] = 'deleted_at;
+|   $config['soft_delete']  = FALSE;
+|   $config['soft_delete_column'] = 'deleted_at;
 |
 */
 $config['soft_delete'] = FALSE;

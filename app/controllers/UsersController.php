@@ -11,6 +11,7 @@ class UsersController extends Controller {
         parent::__construct();
         $this->call->model('UsersModel');
         $this->call->library('pagination');
+        $this->call->helper('url'); // FIX: Load URL helper for reliable base_url()
     }
     
     // List users with pagination + search
@@ -28,12 +29,12 @@ class UsersController extends Controller {
             $q = trim($this->io->get('q'));
         }
 
-        $records_per_page = 5;
+        $records_per_page = 5; 
 
         // Fetch records
         $all = $this->UsersModel->page($q, $records_per_page, $page);
         
-        // FIX: Extract data correctly
+        // FIX: Extract data correctly for table and pagination
         $data['users'] = $all['records']; 
         $total_rows = $all['total_rows']; 
 
@@ -52,7 +53,7 @@ class UsersController extends Controller {
             $total_rows,
             $records_per_page,
             $page,
-            base_url('index.php/users') . '?q=' . urlencode($q) // Render URL FIX
+            base_url('index.php/users') . '?q=' . urlencode($q) // FINAL URL FIX
         );
 
         $data['links'] = $this->pagination->paginate();
@@ -64,19 +65,18 @@ class UsersController extends Controller {
     public function create()
     {
         if($this->io->method() == 'post'){
-            // BUG FIX: Tumutugma na sa 'first_name' at 'last_name' ng create.php
+            // FIX: Correct field names matching create.php input names
             $data = [
                 'fname'=> $this->io->post('first_name'), 
                 'lname'=> $this->io->post('last_name'), 
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->insert($data)) {
-                redirect(base_url('index.php/users')); // FINAL FIX: Gamitin ang base_url sa redirect
+                redirect(base_url('index.php/users')); // FINAL URL FIX
             } else {
                 echo 'Error inserting user.';
             }
         } else {
-            // Ito ang nagpapakita ng form, kapag tama ang URL na na-access, DITO mapupunta.
             $this->call->view('users/create');
         }
     }
@@ -92,9 +92,9 @@ class UsersController extends Controller {
                 'email'=> $this->io->post('email')
             ];
             if($this->UsersModel->update($id, $data)) {
-                redirect(base_url('index.php/users')); // Render URL FIX
+                redirect(base_url('index.php/users')); // FINAL URL FIX
             } else {
-                redirect(base_url('index.php/users')); // Render URL FIX
+                redirect(base_url('index.php/users')); // FINAL URL FIX
             }
         }
         $this->call->view('users/update', $data);
@@ -104,7 +104,7 @@ class UsersController extends Controller {
     public function delete($id)
     {
         if($this->UsersModel->delete($id)) {
-            redirect(base_url('index.php/users')); // Render URL FIX
+            redirect(base_url('index.php/users')); // FINAL URL FIX
         } else {
             echo 'Error deleting user.';
         }
