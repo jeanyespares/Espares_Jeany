@@ -79,7 +79,7 @@ class Config {
 			}
 			else
 			{
-				$base_url = 'http://localhost/';
+				$base_url = 'https://espares-jeany.onrender.com';
 			}
 			$this->set('base_url', $base_url);
 		}
