@@ -34,7 +34,7 @@ class UsersController extends Controller {
             $total_rows,
             $records_per_page,
             $page,
-            base_url('index.php/users') . '?q=' . urlencode($q)
+            base_url('users') . '?q=' . urlencode($q)
         );
 
         $data['links'] = $this->pagination->paginate();
@@ -57,9 +57,9 @@ class UsersController extends Controller {
         ];
 
         if ($this->UsersModel->insert($data)) {
-            redirect(base_url('index.php/users'));
+            redirect(base_url('users'));
         } else {
-            echo '❌ Error inserting user.';
+            echo '<div class="text-red-500 text-center mt-4">❌ Error inserting user.</div>';
         }
     }
 
@@ -80,9 +80,9 @@ class UsersController extends Controller {
         ];
 
         if ($this->UsersModel->update($id, $payload)) {
-            redirect(base_url('index.php/users'));
+            redirect(base_url('users'));
         } else {
-            echo '❌ Error updating user.';
+            echo '<div class="text-red-500 text-center mt-4">❌ Error updating user.</div>';
         }
     }
 
@@ -90,9 +90,9 @@ class UsersController extends Controller {
     public function delete($id)
     {
         if ($this->UsersModel->delete($id)) {
-            redirect(base_url('index.php/users'));
+            redirect(base_url('users'));
         } else {
-            echo '❌ Error deleting user.';
+            echo '<div class="text-red-500 text-center mt-4">❌ Error deleting user.</div>';
         }
     }
 }
